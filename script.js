@@ -1,3 +1,6 @@
+// set the players object
+let playerOne, playerTwo;
+
 const game = (function() {
 
     // factory function to create players
@@ -51,6 +54,7 @@ function checkWinningCombinations() {
     return "";
 }
 
+// to check if the game is a draw
 function checkDraw() {
     for(let i of game.gameBoardInstance.board) {
         if(i == "") {
@@ -60,32 +64,90 @@ function checkDraw() {
     return true;
 }
 
+// to check if we have a result or to continue the game
 function drawOrWin() {
+    let result = document.querySelector(".result");
     let winner = checkWinningCombinations();
-    if (winner === player1.getSymbol()) {
-        console.log(player1.name + " wins");
-    } else if (winner === player2.getSymbol()) {
-        console.log(player2.name + " wins");
+    if (winner === playerOne.getSymbol()) {
+        result.textContent = playerOne.name + " wins!";
+        removeEventListeners();
+    } else if (winner === playerTwo.getSymbol()) {
+        result.innerHTML = playerTwo.name + " wins!";
+        removeEventListeners();
     }else if(checkDraw()) {
-        console.log("Draw");
+        result.textContent ="It is a draw";
+        removeEventListeners();
     }
 }
 
-const player1 = game.playerFactory("Player1", "X");
-const player2 = game.playerFactory("Player2", "O");
-
+// the "engine" of the game
 function playGame(index) {
     if(game.gameBoardInstance.board[index] != "") {
-        console.log("Aready filled, try again");
-    } else if(player1.flag == 0) {
-        game.gameBoardInstance.board[index] = player1.getSymbol();
-        player1.flag = 1;
-        player2.flag = 0;
+        let result = document.querySelector(".result");
+        result.textContent = "Already filled, try again";
+    } else if(playerOne.flag == 0) {
+        game.gameBoardInstance.board[index] = playerOne.getSymbol();
+        document.getElementById(index).textContent = playerOne.getSymbol();
+        playerOne.flag = 1;
+        playerTwo.flag = 0;
         drawOrWin();
     } else {
-        game.gameBoardInstance.board[index] = player2.getSymbol();
-        player2.flag = 1;
-        player1.flag = 0;
+        game.gameBoardInstance.board[index] = playerTwo.getSymbol();
+        playerTwo.flag = 1;
+        playerOne.flag = 0;
+        document.getElementById(index).textContent = playerTwo.getSymbol();
         drawOrWin();
     }
 }
+
+// setting up event listeners for the form
+function initializeGame() {
+    let name1, name2;
+    let form = document.querySelector("form");
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        name1 = document.getElementById("NamePlayerOne").value;
+        name2 = document.getElementById("NamePlayerTwo").value;
+
+        playerOne = game.playerFactory(name1, "X");
+        playerTwo = game.playerFactory(name2, "O");
+
+        initializeGridEvents();
+    });
+}
+
+// creates and initializes the event listeners for the grid cells
+function initializeGridEvents() {
+    let cells = document.querySelectorAll(".cells");
+    cells.forEach((cell, index) => {
+        cell.addEventListener('click', gridClick);
+    });
+}
+
+function gridClick(event) {
+    playGame(event.target.id);
+    console.log(event.target.id);
+}
+
+function removeEventListeners() {
+    let cells = document.querySelectorAll(".cells");
+    cells.forEach((cell, index) => {
+        cell.removeEventListener("click", gridClick);
+    })
+}
+
+// resetting the board
+let reset = document.getElementById("reset");
+reset.addEventListener("click", resetBoard);
+function resetBoard() {
+    let cells = document.querySelectorAll(".cells");
+    cells.forEach(cell => {
+        cell.textContent = "";
+    });
+    game.gameBoardInstance.board.fill("");
+    document.querySelector(".result").textContent = "";
+    document.getElementById("NamePlayerOne").value = "";
+    document.getElementById("NamePlayerTwo").value = "";
+}
+
+initializeGame();
