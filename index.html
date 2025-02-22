@@ -8,16 +8,35 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <div class="displayController">
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
-            <div class="cells"></div>
+        <div class="Main">
+            <div class="displayController">
+                <div class="cells" data-index="0"></div>
+                <div class="cells" data-index="1"></div>
+                <div class="cells" data-index="2"></div>
+                <div class="cells" data-index="3"></div>
+                <div class="cells" data-index="4"></div>
+                <div class="cells" data-index="5"></div>
+                <div class="cells" data-index="6"></div>
+                <div class="cells" data-index="7"></div>
+                <div class="cells" data-index="8"></div>
+            </div>
+            <form action="*" method="post">
+                <section class="PlayerOne">
+                    <label for="NamePlayerOne">Name (Player one): <span aria-label="required">*</span></label><br>
+                    <input type="text" name="PlayerOne" id="NamePlayerOne" required>
+                    <p>Note: Player One is X</p>
+                </section>
+                <section class="PlayerTwo">
+                    <label for="NamePlayerTwo">Name (Player Two): <span aria-label="required">*</span></label><br>
+                    <input type="text" name="PlayerTwo" id="NamePlayerTwo" required>
+                    <p>Note: Player One is O</p>
+                </section>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="displayResults">
+            <div class="result"></div>
+            <button type="button" id="reset">Reset the game</button>
         </div>
     </body>
 </html>

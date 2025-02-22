@@ -51,15 +51,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* the main css*/
 
-body {
+.Main {
+	margin-top: 30px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 30px;	
 }
 
 .displayController {
-	width: 600px;
-	height: 600px;
+	width: 300px;
+	height: 300px;
 	border-radius: 5px;
 	border-width: 10px;
 	border-style: double;
@@ -72,6 +74,32 @@ body {
 	height: 100%;
 	width: 100%;
 	border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+form {
+	display: flex;
+	padding: 3px;
+	gap: 10px;
+	border: 2px solid black;
+}
+
+.displayResults {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-self: center;
+}
+
+.result {
+	border: 2px solid black;
+	width: 500px;
+	height: 100px;
+	margin-bottom: 3px;
+	font-size: 3rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
