@@ -126,7 +126,6 @@ function initializeGridEvents() {
 
 function gridClick(event) {
     playGame(event.target.id);
-    console.log(event.target.id);
 }
 
 function removeEventListeners() {
